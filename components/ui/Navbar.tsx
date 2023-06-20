@@ -1,6 +1,9 @@
-import { Spacer, Text, useTheme } from '@nextui-org/react';
+import React from 'react';
+
 import Image from 'next/image';
-import React from 'react'
+import { Link, Spacer, Text, useTheme } from '@nextui-org/react';
+import NextLink from 'next/link';
+
 
 export const Navbar = () => {
 
@@ -16,6 +19,8 @@ export const Navbar = () => {
       padding: '0px 20px',
       backgroundColor: theme?.colors.gray900.value
     }}>
+
+      <NextLink href="/" passHref style={{flexDirection: 'row', display: 'flex'}}>
         <Image
           src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
           alt='Pokémon Logo'
@@ -24,8 +29,12 @@ export const Navbar = () => {
         />
         <Text color='white' h2>P</Text>
         <Text color='white' h3>okémon</Text>
-        <Spacer style={{ flex:1 }}/>
-        <Text color='white'>Favoritos</Text>
+      </NextLink>
+        
+      <Spacer style={{ flex:1 }}/>
+      <NextLink href="/favorites" passHref>
+          <Text color='white'>Favoritos</Text>
+      </NextLink>
       </div>
   )
 };

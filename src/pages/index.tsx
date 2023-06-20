@@ -2,22 +2,36 @@ import { FC } from "react";
 import { GetStaticProps } from 'next'
 
 import { Layout } from "../../components/layouts";
+import { pokeApi } from "../../api";
+import { PokemonListResponse, SmallPokemon } from "../../interfaces";
+import { Grid } from "@nextui-org/react";
+import { PokemonCard } from "../../components/pokemon/PokemonCard";
+import Image from "next/image";
 
-const Home: FC = (props) => {
-  console.log('Props', props);
+interface Props {
+  pokemons: SmallPokemon[];
+}
+
+const Home: FC<Props> = ({pokemons}) => {
+  console.log('pokemons', pokemons);
   return (
     <Layout title="Pokemon List">
-    
-    <ul>
-      <li>pokémon</li>
-      <li>pokémon</li>
-      <li>pokémon</li>
-      <li>pokémon</li>
-      <li>pokémon</li>
-      <li>pokémon</li>
-      <li>pokémon</li>
-      <li>pokémon</li>
-    </ul>
+      <Image
+        src="/image/banner-pokemon.png"
+        alt="Banner Pokemon"
+        width={500}
+        height={200}
+      />
+    <Grid.Container>
+      {
+        pokemons.map((pokemon, index) =><Grid xs={6} sm={3} md={2} xl={1} key={index} css={{p: 10}}>
+          <PokemonCard
+            key={index}
+            pokemon={pokemon}
+          />
+        </Grid> )
+      }
+    </Grid.Container>
     </Layout>
   )
 }
@@ -30,10 +44,17 @@ const Home: FC = (props) => {
 
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  console.log('Hola mundo')
+  const { data } = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
+  // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png
+  const pokemons : SmallPokemon[] = data.results.map((pokemon, index) => ({
+    ...pokemon,
+    id: index,
+    image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${++index}.png`
+  }));
+  console.log(data, pokemons);
   return {
     props: {
-      name: 'Cinthia San'
+      pokemons
     }
   }
 }
