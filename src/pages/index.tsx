@@ -6,7 +6,6 @@ import { pokeApi } from "../../api";
 import { PokemonListResponse, SmallPokemon } from "../../interfaces";
 import { Grid } from "@nextui-org/react";
 import { PokemonCard } from "../../components/pokemon/PokemonCard";
-import Image from "next/image";
 
 interface Props {
   pokemons: SmallPokemon[];
@@ -16,12 +15,6 @@ const Home: FC<Props> = ({pokemons}) => {
   console.log('pokemons', pokemons);
   return (
     <Layout title="Pokemon List">
-      <Image
-        src="/image/banner-pokemon.png"
-        alt="Banner Pokemon"
-        width={500}
-        height={200}
-      />
     <Grid.Container>
       {
         pokemons.map((pokemon, index) =><Grid xs={6} sm={3} md={2} xl={1} key={index} css={{p: 10}}>
