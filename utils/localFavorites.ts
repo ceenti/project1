@@ -7,6 +7,7 @@ const toogleFav = ( id:number ) => {
     favorites = favorites.filter( pokeId => pokeId !== id );
   }
   else {
+    console.log("Push Id", id)
     favorites.push( id );
   }
 

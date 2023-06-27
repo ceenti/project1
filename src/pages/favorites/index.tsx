@@ -8,18 +8,19 @@ const Favorites = () => {
   const [favPokemons, setFavPokemons] = useState<number[]>([])
 
   useEffect(() => {
-    setFavPokemons( localFavorites.pokemons );
+    setFavPokemons( localFavorites.pokemons() );
+    console.log("favPokemons", favPokemons);
   }, [])
   
 
   return (
     <Layout title='Pokémon - Favorites'>
       {
-        favPokemons.length === 0
-        ? (<NoFav />)
-        : (
+        favPokemons.length > 0
+        ?  (
           <FavPokemons pokemons={favPokemons}/>
         )
+        : (<NoFav />)
       }
      
     </Layout>
